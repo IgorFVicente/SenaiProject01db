@@ -33,6 +33,12 @@ public class ProdutoDAO {
                 null, contentValues) > 0;
     }
 
+    public boolean excluir(int id) {
+        return dbGateway.getDatabase().delete(ProdutoEntity.TABLE_NAME,
+                ProdutoEntity._ID + "=?",
+                new String[]{String.valueOf(id)}) > 0;
+    }
+
     public List<Produto> listar() {
         List<Produto> produtos = new ArrayList<>();
         Cursor cursor = dbGateway.getDatabase().rawQuery(SQL_LISTAR_TODOS, null);

@@ -45,7 +45,15 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         EditText editTextValor = findViewById(R.id.editText_valor);
 
         String nome = editTextNome.getText().toString();
-        Float valor = Float.parseFloat(editTextValor.getText().toString());
+        String valorString = editTextValor.getText().toString();
+
+        if ((nome.equals("")) || (valorString.equals(""))) {
+            Toast.makeText(CadastroProdutoActivity.this, "Por favor, preencha todos os campos",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Float valor = Float.parseFloat(valorString);
 
         Produto produto = new Produto(id, nome, valor);
         ProdutoDAO produtoDao = new ProdutoDAO(getBaseContext());
@@ -58,6 +66,12 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     }
 
     public void onClickExcluir(View v) {
-        Toast.makeText(CadastroProdutoActivity.this, "TO DO", Toast.LENGTH_LONG).show();
+        ProdutoDAO produtoDao = new ProdutoDAO(getBaseContext());
+        boolean excluiu = produtoDao.excluir(id);
+        if (excluiu) {
+            finish();
+        } else {
+            Toast.makeText(CadastroProdutoActivity.this, "Erro ao excluir", Toast.LENGTH_LONG).show();
+        }
     }
 }
